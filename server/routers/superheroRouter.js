@@ -4,6 +4,7 @@ const { imageUpload } = require("../utils/imageUpload");
 
 superheroRouter
   .route("/")
-  .post(imageUpload.array("images", 10), superheroController.createSuperhero);
+  .post(imageUpload.array("images", 10), superheroController.createSuperhero)
+  .get(superheroController.getSuperheroes);
 
 module.exports = superheroRouter;
