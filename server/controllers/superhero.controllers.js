@@ -1,11 +1,16 @@
+const { Superhero } = require("../models");
+
 module.exports.createSuperhero = async (req, res, next) => {
   try {
-    const {body} = req;
+    const { body, files } = req;
 
-    res.status(201).send({data: body})
-    
+    const images = files.map(file => file.filename)
+
+    const superhero = await Superhero.create({ ...body, images })
+
+    res.status(201).send({ data: superhero });
   } catch (error) {
-    next(error)
+    next(error);
   }
 };
 
