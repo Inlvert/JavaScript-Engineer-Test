@@ -43,15 +43,7 @@ module.exports.getSuperheroes = async (req, res, next) => {
 
 module.exports.getSuperhero = async (req, res, next) => {
   try {
-    const {
-      params: { superheroId },
-    } = req;
-
-    const superhero = await Superhero.findById(superheroId);
-
-    if (!superhero) {
-      return next(createHttpError(404, "Superhero not found"));
-    }
+    const { superhero } = req;
 
     res.send({ data: superhero });
   } catch (error) {
@@ -59,5 +51,20 @@ module.exports.getSuperhero = async (req, res, next) => {
   }
 };
 
-module.exports.updateSuperhero = async (req, res, next) => {};
+module.exports.updateSuperhero = async (req, res, next) => {
+  try {
+    const { superhero, body, files} = req;
+
+    const images = files.map((file) => file.filename);
+
+    superhero.set({ ...body, images });
+
+    const updatedSuperhero = await superhero.save();
+
+    res.send({ data: updatedSuperhero });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports.deleteSuperhero = async (req, res, next) => {};
