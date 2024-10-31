@@ -1,3 +1,4 @@
+const createHttpError = require("http-errors");
 const { Superhero } = require("../models");
 
 module.exports.createSuperhero = async (req, res, next) => {
@@ -29,15 +30,34 @@ module.exports.getSuperheroes = async (req, res, next) => {
       .skip((page - 1) * limit);
 
     const count = await Superhero.countDocuments();
-    
 
-    res.send({ data: superheroes, totalPages: Math.ceil(count / limit), currentPage: page });
-
+    res.send({
+      data: superheroes,
+      totalPages: Math.ceil(count / limit),
+      currentPage: page,
+    });
   } catch (error) {
     next(error);
   }
 };
 
-module.exports.getSuperhero = async (req, res, next) => {};
+module.exports.getSuperhero = async (req, res, next) => {
+  try {
+    const {
+      params: { superheroId },
+    } = req;
+
+    const superhero = await Superhero.findById(superheroId);
+
+    if (!superhero) {
+      return next(createHttpError(404, "Superhero not found"));
+    }
+
+    res.send({ data: superhero });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports.updateSuperhero = async (req, res, next) => {};
 module.exports.deleteSuperhero = async (req, res, next) => {};

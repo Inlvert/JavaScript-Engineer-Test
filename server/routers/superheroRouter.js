@@ -7,4 +7,6 @@ superheroRouter
   .post(imageUpload.array("images", 10), superheroController.createSuperhero)
   .get(superheroController.getSuperheroes);
 
+superheroRouter.route("/:superheroId").get(superheroController.getSuperhero);
+
 module.exports = superheroRouter;
