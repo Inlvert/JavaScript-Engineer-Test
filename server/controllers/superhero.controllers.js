@@ -1,4 +1,3 @@
-const createHttpError = require("http-errors");
 const { Superhero } = require("../models");
 
 module.exports.createSuperhero = async (req, res, next) => {
@@ -67,4 +66,15 @@ module.exports.updateSuperhero = async (req, res, next) => {
   }
 };
 
-module.exports.deleteSuperhero = async (req, res, next) => {};
+module.exports.deleteSuperhero = async (req, res, next) => {
+  try {
+    const {superhero} = req;
+    
+    await superhero.deleteOne()
+
+    res.send({data: superhero})
+
+  } catch (error) {
+    next(error)
+  }
+};

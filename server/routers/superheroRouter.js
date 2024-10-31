@@ -11,6 +11,7 @@ superheroRouter
 superheroRouter
   .route("/:superheroId")
   .get(findSuperhero, superheroController.getSuperhero)
-  .put(imageUpload.array("images", 10), findSuperhero, superheroController.updateSuperhero);
+  .put(imageUpload.array("images", 10), findSuperhero, superheroController.updateSuperhero)
+  .delete(findSuperhero, superheroController.deleteSuperhero);
 
 module.exports = superheroRouter;
