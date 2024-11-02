@@ -1,0 +1,21 @@
+.wrapper{
+  background-color: #333;
+}
+
+.textInput{
+  display: flex;
+  border: none;
+  color: white;
+  font-size: 1rem;
+  background-color: #333;
+  justify-content: center;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  border: solid, white, 2px;
+  border-radius: 25px;
+}
+
+.err{
+  color: red;
+  margin: 10px;
+}
