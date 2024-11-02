@@ -18,14 +18,14 @@ const initialValues = {
 
 const validationSchema = Yup.object({
   nickname: Yup.string()
-    .matches(/^[a-zA-Z0-9_-]{1,16}$/, "Nickname must be 1-16 characters long and contain letters and numbers only")
+    .matches(/^[a-zA-Zа-яА-ЯЄєЇї0-9 _-]{1,16}$/, "Nickname must be 1-16 characters long and contain letters and numbers only")
     .required("Nickname is required"),
   realName: Yup.string(),
   originDescription: Yup.string(),
-  superpowers: Yup.string().required("Superpowers are required"),
+  superpowers: Yup.string().required("Superpowers is required"),
   catchPhrase: Yup.string(),
   images: Yup.array()
-    .max(5, "You can upload up to 5 images only")
+    .max(10, "You can upload up to 10 images only")
     .of(Yup.mixed().test("fileSize", "File too large", (file) => !file || file.size <= 5000000)),
 });
 
@@ -60,11 +60,11 @@ const AddSuperheroForm = () => {
       {({ setFieldValue, values, resetForm }) => (
         <Form className={style.wrapper}>
           <h3 className={style.text}>ADD SUPERHERO</h3>
-          <TextField label="Nickname" name="nickname" />
-          <TextField label="Real Name" name="realName" />
-          <TextField label="Origin Description" name="originDescription" type="textarea" />
-          <TextField label="Superpowers" name="superpowers" />
-          <TextField label="Catch Phrase" name="catchPhrase" />
+          <TextField name="nickname" placeholder="Nickname"/>
+          <TextField name="realName" placeholder="Real Name"/>
+          <TextField name="originDescription" type="textarea" placeholder="Origin Description"/>
+          <TextField name="superpowers" placeholder="Superpowers"/>
+          <TextField name="catchPhrase" placeholder="Catch Phrase"/>
           <ImageUpload setFieldValue={setFieldValue} values={values} resetForm={resetForm} />
           <button type="submit" className={style.btn}>Submit</button>
         </Form>
