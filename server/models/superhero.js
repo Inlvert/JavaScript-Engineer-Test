@@ -6,7 +6,7 @@ const superheroSchema = new Schema({
     required: [true, "Nickname is required"],
     unique: true,
     match: [
-      /^[a-zA-Z0-9_-]{1,16}$/,
+      /^[a-zA-Zа-яА-ЯЄєЇї0-9_-]{1,16}$/,
       "Nickname mast be 1-16 symbols and must contain letters and numbers only",
     ],
   },
@@ -20,6 +20,7 @@ const superheroSchema = new Schema({
   },
   superpowers: {
     type: String,
+    required: [true, "Superpowers is required"]
   },
   catchPhrase: {
     type: String,
