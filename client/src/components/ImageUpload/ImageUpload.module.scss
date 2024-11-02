@@ -1,0 +1,48 @@
+.wrapper {
+  margin: 20px;
+}
+
+.chooseFile {
+  background-color: white;
+  max-width: 300px;
+  border-radius: 30px;
+  color: #333;
+  font-weight: bold;
+  padding: 10px 20px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+  &:hover {
+    background-color: #ffae00;
+    color: #333;
+  }
+}
+
+.cover {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin: 10px;
+}
+
+.position {
+  position: relative;
+}
+.previews {
+  width: 60px;
+  height: 60px;
+}
+
+.btn{
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: red;
+  color: white;
+  cursor: pointer;
+  &:hover {
+    background-color: red;
+    color: #333;
+  }
+}
