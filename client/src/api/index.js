@@ -1,6 +1,5 @@
 import axios from "axios";
 import CONSTANTS from "../constants";
-import { createAction } from "@reduxjs/toolkit";
 
 const httpClient = axios.create({
   baseURL: CONSTANTS.HTTP_SERVER_URL,
@@ -16,11 +15,21 @@ export const getSuperheroes = async (page) => {
   return {
     data: response.data.data,
     totalPages: response.data.totalPages,
-    currentPage: +(response.data.currentPage),
+    currentPage: +response.data.currentPage,
   };
 };
 
 export const getSuperheroById = async (superheroId) => {
   const response = await httpClient.get(`/superheroes/${superheroId}`);
-  return response
+  return response;
+};
+
+export const updateSuperheroById = async ({superheroId, superheroData}) => {
+  const response = await httpClient.put(`/superheroes/${superheroId}`, superheroData);
+  return response;
+};
+
+export const deleteSuperheroById = async (superheroId) => {
+  const response = await httpClient.delete(`/superheroes/${superheroId}`);
+  return response;
 }
