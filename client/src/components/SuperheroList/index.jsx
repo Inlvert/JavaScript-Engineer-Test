@@ -5,6 +5,7 @@ import {
   getSuperheroes,
   nextPage,
   prevPage,
+  deleteSuperheroById,
 } from "../../redux/slices/superheroSlice";
 import CONSTANTS from "../../constants";
 import style from "./SuperheroList.module.scss";
@@ -32,14 +33,20 @@ const SuperheroList = () => {
     }
   };
 
+  const hendelDeleteSyperhero = async (superheroId) => {
+    await dispatch(deleteSuperheroById(superheroId));
+    console.log(superheroId);
+    dispatch(getSuperheroes(currentPage));
+  };
+
   return (
-    <div>
-      <h1>Superhero List</h1>
+    <div className={style.cover}>
+      <h1>Superheroes</h1>
       <div>
-        <button onClick={handlePrevPage} disabled={currentPage === 1}>
+        <button onClick={handlePrevPage} disabled={currentPage === 1} className={style.btn}>
           Prev
         </button>
-        <button onClick={handleNextPage} disabled={currentPage === totalPages}>
+        <button onClick={handleNextPage} disabled={currentPage === totalPages} className={style.btn}>
           Next
         </button>
       </div>
@@ -66,6 +73,9 @@ const SuperheroList = () => {
                     <h3 className={style.name}>{superhero.nickname}</h3>
                   </div>
                 </Link>
+                <button onClick={() => hendelDeleteSyperhero(superhero._id)}>
+                  Del
+                </button>
               </li>
             ))
           ) : (
