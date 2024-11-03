@@ -34,15 +34,3 @@
   height: 60px;
 }
 
-.btn{
-  position: absolute;
-  top: 0;
-  right: 0;
-  background-color: red;
-  color: white;
-  cursor: pointer;
-  &:hover {
-    background-color: red;
-    color: #333;
-  }
-}

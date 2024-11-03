@@ -71,7 +71,6 @@ const ImageUpload = ({ setFieldValue, values }) => {
               <button
                 type="button"
                 onClick={() => handleRemoveImage(index)}
-                className={style.btn}
               >
                 x
               </button>
