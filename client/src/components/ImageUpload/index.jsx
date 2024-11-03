@@ -6,6 +6,17 @@ const ImageUpload = ({ setFieldValue, values }) => {
   const [imagePreviews, setImagePreviews] = useState([]);
 
   useEffect(() => {
+    // Очищуємо об'єктні URL при зміні зображень або розмонтовуванні компонента
+    return () => {
+      imagePreviews.forEach((src) => {
+        if (src.startsWith("blob:")) {
+          URL.revokeObjectURL(src);
+        }
+      });
+    };
+  }, [imagePreviews]);
+
+  useEffect(() => {
     if (values.images.length === 0) {
       setImagePreviews([]);
     }
@@ -14,12 +25,12 @@ const ImageUpload = ({ setFieldValue, values }) => {
   const handleImageChange = (event) => {
     const newFiles = Array.from(event.target.files);
     const existingFiles = values.images || [];
-    const updatedFiles = existingFiles.concat(newFiles).slice(0, 5);
+    const updatedFiles = existingFiles.concat(newFiles).slice(0, 10);
 
     setFieldValue("images", updatedFiles);
     const updatedPreviews = updatedFiles.map((file) =>
-      URL.createObjectURL(file)
-    );
+      file instanceof File ? URL.createObjectURL(file) : null 
+    ).filter(Boolean); 
     setImagePreviews(updatedPreviews);
   };
 
@@ -34,7 +45,7 @@ const ImageUpload = ({ setFieldValue, values }) => {
     <div>
       <div className={style.wrapper}>
         <label htmlFor="images" className={style.chooseFile}>
-          add Images
+          Add Images
         </label>
         <input
           type="file"
@@ -72,4 +83,4 @@ const ImageUpload = ({ setFieldValue, values }) => {
   );
 };
 
-export default ImageUpload;
+export default ImageUpload; 
