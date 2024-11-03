@@ -19,3 +19,8 @@ export const getSuperheroes = async (page) => {
     currentPage: +(response.data.currentPage),
   };
 };
+
+export const getSuperheroById = async (superheroId) => {
+  const response = await httpClient.get(`/superheroes/${superheroId}`);
+  return response
+}
