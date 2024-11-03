@@ -5,6 +5,7 @@ const SLICE_NAME = "superheroes";
 
 let initialState = {
   superheroes: [],
+  superhero: null,
   totalPages: 0,
   currentPage: 1,
   isLoading: null,
@@ -45,15 +46,33 @@ const getSuperheroes = createAsyncThunk(
   }
 );
 
+const getSuperheroById = createAsyncThunk(
+  `${SLICE_NAME}/getSuperheroById`,
+  async (superheroId, thunkAPI) => {
+    try {
+      const response = await API.getSuperheroById(superheroId);
+
+      const {
+        data: { data: superhero },
+      } = response;
+
+      return superhero;
+    } catch (error) {
+      console.error("Error fetching superhero:", error);
+      return thunkAPI.rejectWithValue(error.response.data.data.errors);
+    }
+  }
+);
+
 const superheroSlice = createSlice({
   name: SLICE_NAME,
   initialState,
   reducers: {
     nextPage: (state) => {
-      state.currentPage = +(state.currentPage) + 1;
+      state.currentPage = +state.currentPage + 1;
     },
     prevPage: (state) => {
-      state.currentPage = +(state.currentPage) - 1;
+      state.currentPage = +state.currentPage - 1;
     },
   },
   extraReducers: (builder) => {
@@ -82,6 +101,17 @@ const superheroSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     });
+    builder.addCase(getSuperheroById.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getSuperheroById.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.superhero = action.payload;
+    });
+    builder.addCase(getSuperheroById.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    });
   },
 });
 
@@ -89,6 +119,6 @@ const { reducer: superheroReducer, actions } = superheroSlice;
 
 export const { nextPage, prevPage } = actions;
 
-export { createSuperhero, getSuperheroes };
+export { createSuperhero, getSuperheroes, getSuperheroById };
 
 export default superheroReducer;
