@@ -34,16 +34,12 @@ const SuperheroDetails = () => {
     return <p>Superhero not found.</p>;
   }
 
-  const handleEdit = () => {
-    setIsEditing(true);
-  };
-
-  const closeForm = () => {
-    setIsEditing(false);
+  const toggleEdit = () => {
+    setIsEditing((prevIsEditing) => !prevIsEditing);
   };
 
   return (
-    <div>
+    <div className={style.cover}>
       <Header />
       <div className={style.superheroDetails}>
         <h1>{superhero.nickname}</h1>
@@ -60,17 +56,17 @@ const SuperheroDetails = () => {
             ))}
           </div>
         )}
-        <p>Real Name: {superhero.realName}</p>
-        <p>Description: {superhero.originDescription}</p>
-        <p>Superpowers: {superhero.superpowers}</p>
-        <p>catchPhrase: {superhero.catchPhrase}</p>
+        <h3>Real Name: {superhero.realName}</h3>
+        <h3>Description: {superhero.originDescription}</h3>
+        <h3>Superpowers: {superhero.superpowers}</h3>
+        <h3>Catch phrase: {superhero.catchPhrase}</h3>
         
-        <button onClick={handleEdit}>Edit Superhero</button>
+        <button onClick={toggleEdit}>Edit Superhero</button>
         {isEditing && (
           <AddSuperheroForm
             superheroData={superhero}
             isEditing={true}
-            onClose={closeForm}
+            onClose={toggleEdit}
           />
         )}
       </div>
