@@ -1,11 +1,14 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import {
   getSuperheroes,
   nextPage,
   prevPage,
 } from "../../redux/slices/superheroSlice";
 import CONSTANTS from "../../constants";
+import style from "./SuperheroList.module.scss";
+import placeholderImg from "../../assets/placeholder.png";
 
 const SuperheroList = () => {
   const dispatch = useDispatch();
@@ -45,18 +48,24 @@ const SuperheroList = () => {
       ) : error ? (
         <p>Error: {error}</p>
       ) : (
-        <ul>
+        <ul className={style.ul}>
           {superheroes && superheroes.length > 0 ? (
             superheroes.map((superhero) => (
-              <li key={superhero._id}>
-                <div>
-                  <img
-                    src={`${CONSTANTS.HTTP_SERVER_URL}/images/${superhero.images[0]}`}
-                    alt={superhero.nickname}
-                    style={{ width: "100px", height: "100px" }}
-                  />
-                  <h3>{superhero.nickname}</h3>
-                </div>
+              <li key={superhero._id} className={style.li}>
+                <Link to={`/superheroes/${superhero._id}`}>
+                  <div className={style.wrapper}>
+                    <img
+                      src={
+                        superhero.images && superhero.images.length > 0
+                          ? `${CONSTANTS.HTTP_SERVER_URL}/images/${superhero.images[0]}`
+                          : placeholderImg
+                      }
+                      alt={superhero.nickname}
+                      className={style.img}
+                    />
+                    <h3 className={style.name}>{superhero.nickname}</h3>
+                  </div>
+                </Link>
               </li>
             ))
           ) : (

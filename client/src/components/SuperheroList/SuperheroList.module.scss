@@ -1,0 +1,41 @@
+.ul {
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.li {
+  margin: 10px;
+  &:hover {
+    color: #ffae00;
+  }
+}
+
+.wrapper {
+  border: 1px solid black;
+  backdrop-filter: blur(10px);
+  margin: 0 auto;
+  padding: 20px;
+  border: none;
+  background-color: #333;
+  color: #ffae00;
+  &:hover {
+    color: #ffae00;
+  }
+}
+
+.img {
+  width: 200px;
+  height: 300px;
+  &:hover {
+    background-color: #ffae00;
+  }
+}
+
+.name {
+  color: white;
+  &:hover {
+    color: #ffae00;
+  }
+}
