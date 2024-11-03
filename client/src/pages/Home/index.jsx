@@ -4,9 +4,8 @@ import SuperheroList from '../../components/SuperheroList'
 
 const HomePage = () => {
   return (
-    <div>
+    <div style={{backgroundColor: "#242424", height: "100vh"}}>
       <Header/>
-      <h1>HomePage</h1>
       <SuperheroList />
     </div>
   )

@@ -4,10 +4,11 @@ import AddSuperheroForm from "../../components/AddSuperheroForm";
 
 const AddSuperhero = () => {
   return (
-    <div>
+    <div style={{ backgroundColor: "#242424", height: "100vh" }}>
       <Header />
-      <h1>AddSuperhero</h1>
-      <AddSuperheroForm />
+      <div style={{ padding: "100px" }}>
+        <AddSuperheroForm />
+      </div>
     </div>
   );
 };
