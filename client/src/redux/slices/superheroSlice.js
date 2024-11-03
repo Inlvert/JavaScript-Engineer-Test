@@ -64,6 +64,47 @@ const getSuperheroById = createAsyncThunk(
   }
 );
 
+const updateSuperheroById = createAsyncThunk(
+  `${SLICE_NAME}/updateSuperheroById`,
+  async ({ superheroId, superheroData }, thunkAPI) => {
+    try {
+      const response = await API.updateSuperheroById({
+        superheroId,
+        superheroData,
+      });
+
+      const {
+        data: { data: superhero },
+      } = response;
+
+      console.log(superhero);
+
+      return superhero;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.errors || error.message
+      );
+    }
+  }
+);
+
+const deleteSuperheroById = createAsyncThunk(
+  `${SLICE_NAME}/deleteSuperheroById`,
+  async (superheroId, thunkAPI) => {
+    try {
+      const response = await API.deleteSuperheroById(superheroId);
+
+      const {
+        data: { data: superhero },
+      } = response;
+
+      return superhero;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.data.errors);
+    }
+  }
+);
+
 const superheroSlice = createSlice({
   name: SLICE_NAME,
   initialState,
@@ -112,6 +153,36 @@ const superheroSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     });
+    builder.addCase(updateSuperheroById.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(updateSuperheroById.fulfilled, (state, action) => {
+      state.isLoading = false;
+      const index = state.superheroes.findIndex(
+        (superhero) => superhero._id === action.payload._id
+      );
+      if (index !== -1) {
+        state.superheroes[index] = action.payload;
+      }
+      state.superhero = action.payload;
+    });
+    builder.addCase(updateSuperheroById.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    });
+    builder.addCase(deleteSuperheroById.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(deleteSuperheroById.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.superheroes = state.superheroes.filter(
+        (superhero) => superhero._id !== action.payload.id
+      );
+    });
+    builder.addCase(deleteSuperheroById.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    });
   },
 });
 
@@ -119,6 +190,12 @@ const { reducer: superheroReducer, actions } = superheroSlice;
 
 export const { nextPage, prevPage } = actions;
 
-export { createSuperhero, getSuperheroes, getSuperheroById };
+export {
+  createSuperhero,
+  getSuperheroes,
+  getSuperheroById,
+  updateSuperheroById,
+  deleteSuperheroById
+};
 
 export default superheroReducer;
