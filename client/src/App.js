@@ -3,6 +3,7 @@ import './App.css';
 import { Switch, Route } from "react-router-dom";
 import AddSuperhero from './pages/Add';
 import HomePage from './pages/Home';
+import SuperheroDetails from './components/SuperheroDetails';
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route exact path="/superheroes" component={AddSuperhero} />
+        <Route path="/superheroes/:superheroId" component={SuperheroDetails} />
       </Switch>
     </div>
   );
